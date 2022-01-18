@@ -25,17 +25,21 @@ namespace BookCatalog.Repo
         }
         public void CreateBook(Book book)
         {
-            throw new NotImplementedException();
+            _Books.Add(book);
         }
 
-        public void DeleteBook(Guid id, Book book)
+        public void DeleteBook(Guid id)
         {
-            throw new NotImplementedException();
+            var bookIndex = _Books.FindIndex(x => x.Id == id);
+            if (bookIndex > -1)
+                _Books.RemoveAt(bookIndex);
         }
 
-        public void UpdateBook(Guid id)
+        public void UpdateBook(Guid id, Book book)
         {
-            throw new NotImplementedException();
+            var bookIndex = _Books.FindIndex(x => x.Id == id);
+            if (bookIndex > -1)
+                _Books[bookIndex] = book;           
         }
     }
 }

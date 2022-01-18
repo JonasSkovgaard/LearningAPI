@@ -25,8 +25,50 @@ namespace BookCatalog.Controllers
         public ActionResult<BookDTO> GetBook(Guid id)
         {
             var book = _BookRepo.GetBook(id);
+            if (book == null)
+                return NotFound();
+
             var bookDTO = new BookDTO { Id = id, Title = book.Title, Price = book.Price };
             return bookDTO;
+        }
+
+        [HttpPost]
+        public ActionResult CreateBook(CreateOrUpdateBook book)
+        {
+            var  myBook = new Book();
+            myBook.Id = Guid.NewGuid();
+            myBook.Title = book.Title;
+            myBook.Price = book.Price;
+
+            _BookRepo.CreateBook(myBook);
+            return Ok();
+        }
+
+        [HttpPut]
+        public ActionResult UpdateBook(Guid id, CreateOrUpdateBook book)
+        {
+            var myBook = _BookRepo.GetBook(id);
+
+            if (myBook == null)
+                return NotFound();
+
+            myBook.Title = book.Title;
+            myBook.Price = book.Price;
+
+            _BookRepo.UpdateBook(id, myBook);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteBook(Guid id)
+        {
+            var myBook = _BookRepo.GetBook(id);
+            if (myBook == null)
+                return NotFound();
+
+            _BookRepo.DeleteBook(id);
+            return Ok();
         }
     }
 }

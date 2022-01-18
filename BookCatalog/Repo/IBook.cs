@@ -8,8 +8,8 @@ namespace BookCatalog.Repo
         public Book GetBook(Guid id);
 
         public void CreateBook(Book book);
-        public void DeleteBook(Guid id,Book book);
-        public void UpdateBook(Guid id);
+        public void DeleteBook(Guid id);
+        public void UpdateBook(Guid id, Book book);
 
 
     }
